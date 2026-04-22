@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q4 Skills Test</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+    background:linear-gradient(to right,#0f172a,#1e293b);
+    font-family:Arial,sans-serif;
+    color:#e5e7eb;
+}
+
+.login-box{
+    max-width:430px;
+    margin:70px auto;
+    background:#111827;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:#f9fafb;
+}
+
+.dashboard{
+    display:none;
+    padding:20px;
+}
+
+.side{
+    background:#020617;
+    color:white;
+    min-height:100vh;
+    padding:20px;
+}
+
+.side a{
+    display:block;
+    color:#cbd5e1;
+    text-decoration:none;
+    padding:10px;
+    margin-bottom:5px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.side a:hover{
+    background:#1e293b;
+    color:#ffffff;
+}
+
+.card{
+    border-radius:15px;
+    background:#111827;
+    color:#f8fafc;
+    box-shadow:0 5px 12px rgba(0,0,0,.25);
+}
+
+.smalltxt{
+    font-size:14px;
+    color:#94a3b8;
+}
+
+.progress{
+    height:10px;
+    background:#334155;
+}
+
+.form-control{
+    background:#1e293b;
+    border:1px solid #475569;
+    color:white;
+}
+
+.form-control:focus{
+    background:#1e293b;
+    color:white;
+    border-color:#38bdf8;
+    box-shadow:none;
+}
+
+.form-check-label{
+    color:#cbd5e1;
+}
+
+.btn-info{
+    background:#0ea5e9;
+    border:none;
+}
+
+.btn-info:hover{
+    background:#0284c7;
+}
+
+.btn-secondary{
+    background:#475569;
+    border:none;
+}
+
+.btn-secondary:hover{
+    background:#334155;
+}
+
+.btn-success{
+    background:#22c55e;
+    border:none;
+}
+
+.btn-danger{
+    background:#ef4444;
+    border:none;
+}
+
+.btn-primary{
+    background:#6366f1;
+    border:none;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    color:#94a3b8;
+}
+
+#averageResult{
+    color:#38bdf8;
+    font-weight:bold;
+    font-size:22px;
+}
+
+.card h4{
+    color:#ffffff;
+}
+
+.card p{
+    color:#e5e7eb;
+}
+
+input::placeholder{
+    color:#94a3b8 !important;
+    opacity:1;
+}
+
+label{
+    color:#f8fafc;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="loginPage" class="login-box">
+
+<h2 class="text-center mb-3">Student Login</h2>
+
+<p id="clock" class="text-center text-primary"></p>
+
+<label>Username</label>
+<input type="text" id="uname" class="form-control">
+
+<br>
+
+<label>Password</label>
+<input type="password" id="pwd" class="form-control">
+
+<div class="form-check mt-2">
+<input type="checkbox" class="form-check-input" onclick="togglePassword()">
+<label class="form-check-label">View Password</label>
+</div>
+
+<p id="display" class="text-danger mt-2"></p>
+
+<button class="btn btn-info rounded-5" onclick="authenticate()">Login</button>
+<button class="btn btn-secondary rounded-5" onclick="clearForm()">Cancel</button>
+
+</div>
+
+<div id="dashboard" class="dashboard container-fluid">
+
+<div class="row">
+
+<div class="col-md-3 side">
+
+<h3>Portal</h3>
+
+<a href="#">Dashboard</a>
+<a href="#">Subjects</a>
+<a href="#">Tasks</a>
+<a href="#">Grades</a>
+<a href="#">Profile</a>
+<a href="#" onclick="logout()">Logout</a>
+
+<hr>
+
+<p>Welcome, <span id="userDisplay"></span></p>
+<p id="todayDate"></p>
+
+</div>
+
+<div class="col-md-9">
+
+<h1 class="mb-3">My Dashboard</h1>
+
+<div class="row g-3">
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>Math</h5>
+<p class="smalltxt">Grade: 100</p>
+<div class="progress">
+<div class="progress-bar bg-success" style="width:100%"></div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>Science</h5>
+<p class="smalltxt">Grade: 98</p>
+<div class="progress">
+<div class="progress-bar bg-info" style="width:98%"></div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>English</h5>
+<p class="smalltxt">Grade: 95</p>
+<div class="progress">
+<div class="progress-bar bg-warning" style="width:95%"></div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>Filipino</h5>
+<p class="smalltxt">Grade: 97</p>
+<div class="progress">
+<div class="progress-bar bg-danger" style="width:97%"></div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>Social Studies</h5>
+<p class="smalltxt">Grade: 96</p>
+<div class="progress">
+<div class="progress-bar bg-secondary" style="width:96%"></div>
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-3">
+<h5>Values Education</h5>
+<p class="smalltxt">Grade: 99</p>
+<div class="progress">
+<div class="progress-bar bg-dark" style="width:99%"></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="card p-3 mt-4">
+
+<h4>To-Do List</h4>
+
+<input type="text" id="taskInput" class="form-control" placeholder="Enter task">
+
+<button class="btn btn-success mt-2" onclick="addTask()">Add Task</button>
+<button class="btn btn-danger mt-2" onclick="clearTasks()">Clear Tasks</button>
+
+<ul id="taskList" class="mt-3"></ul>
+
+</div>
+
+<div class="card p-3 mt-4">
+
+<h4>Announcements</h4>
+
+<p>No classes on Friday.</p>
+<p>Submit ICT homework tomorrow.</p>
+<p>Science and Social Studies Quiz on Monday.</p>
+
+</div>
+
+<div class="card p-3 mt-4">
+
+<h4>Grade Average Calculator</h4>
+
+<input type="number" id="g1" class="form-control mb-2" placeholder="Math Grade">
+<input type="number" id="g2" class="form-control mb-2" placeholder="Science Grade">
+<input type="number" id="g3" class="form-control mb-2" placeholder="English Grade">
+<input type="number" id="g4" class="form-control mb-2" placeholder="Filipino Grade">
+<input type="number" id="g5" class="form-control mb-2" placeholder="Social Studies Grade">
+<input type="number" id="g6" class="form-control mb-2" placeholder="Values Education Grade">
+
+<button class="btn btn-primary" onclick="computeAverage()">Compute Average</button>
+
+<p class="mt-3">Average: <span id="averageResult">0</span></p>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<footer>
+Neo Macaraig- 9Emerald
+</footer>
+
+
+<script>
+
+function id(x){
+return document.getElementById(x);
+}
+
+function updateClock(){
+id("clock").innerHTML = new Date().toLocaleString();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+function togglePassword(){
+id("pwd").type =
+id("pwd").type=="password" ? "text" : "password";
+}
+
+function clearForm(){
+id("uname").value="";
+id("pwd").value="";
+}
+
+function authenticate(){
+
+let user=id("uname").value.trim();
+let pass=id("pwd").value;
+
+if(!/^[A-Za-z]{3,}$/.test(user)){
+id("display").innerHTML="Username must be 3+ letters only";
+return;
+}
+
+if(pass.length<4){
+id("display").innerHTML="Password must be at least 4 characters";
+return;
+}
+
+id("loginPage").style.display="none";
+id("dashboard").style.display="block";
+id("userDisplay").innerHTML=user;
+id("todayDate").innerHTML=new Date().toDateString();
+
+}
+
+function logout(){
+if(confirm("Logout account?")) location.reload();
+}
+
+function addTask(){
+
+let task=id("taskInput").value;
+
+if(task!=""){
+id("taskList").innerHTML += "<li>"+task+"</li>";
+id("taskInput").value="";
+}
+
+}
+
+function clearTasks(){
+id("taskList").innerHTML="";
+}
+
+function computeAverage(){
+
+let total=0;
+
+for(let i=1;i<=6;i++){
+total += Number(id("g"+i).value);
+}
+
+id("averageResult").innerHTML=(total/6).toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
