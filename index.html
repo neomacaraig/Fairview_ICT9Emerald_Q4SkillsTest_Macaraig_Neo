@@ -157,12 +157,12 @@ label{
 
 <p id="clock" class="text-center text-primary"></p>
 
-<label>Username</label>
+<label>Username (must be 3 characters or more)</label>
 <input type="text" id="uname" class="form-control">
 
 <br>
 
-<label>Password</label>
+<label>Password (must be 4 chracters or more)</label>
 <input type="password" id="pwd" class="form-control">
 
 <div class="form-check mt-2">
@@ -208,6 +208,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>Math</h5>
+<p class="smalltxt">Teacher: Sir Verba</p>
 <p class="smalltxt">Grade: 100</p>
 <div class="progress">
 <div class="progress-bar bg-success" style="width:100%"></div>
@@ -218,6 +219,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>Science</h5>
+<p class="smalltxt">Teacher: Ms Mendaro</p>
 <p class="smalltxt">Grade: 98</p>
 <div class="progress">
 <div class="progress-bar bg-info" style="width:98%"></div>
@@ -228,6 +230,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>English</h5>
+<p class="smalltxt">Teacher: Ms Avila</p>
 <p class="smalltxt">Grade: 95</p>
 <div class="progress">
 <div class="progress-bar bg-warning" style="width:95%"></div>
@@ -238,6 +241,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>Filipino</h5>
+<p class="smalltxt">Teacher: Ms Francisco</p>
 <p class="smalltxt">Grade: 97</p>
 <div class="progress">
 <div class="progress-bar bg-danger" style="width:97%"></div>
@@ -248,6 +252,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>Social Studies</h5>
+<p class="smalltxt">Teacher: Sir Reynoso</p>
 <p class="smalltxt">Grade: 96</p>
 <div class="progress">
 <div class="progress-bar bg-secondary" style="width:96%"></div>
@@ -258,6 +263,7 @@ label{
 <div class="col-md-4">
 <div class="card p-3">
 <h5>Values Education</h5>
+<p class="smalltxt">Teacher: Sir Buntile</p>
 <p class="smalltxt">Grade: 99</p>
 <div class="progress">
 <div class="progress-bar bg-dark" style="width:99%"></div>
@@ -318,6 +324,7 @@ Neo Macaraig- 9Emerald
 
 <script>
 
+
 function id(x){
 return document.getElementById(x);
 }
@@ -344,7 +351,7 @@ let user=id("uname").value.trim();
 let pass=id("pwd").value;
 
 if(!/^[A-Za-z]{3,}$/.test(user)){
-id("display").innerHTML="Username must be 3+ letters only";
+id("display").innerHTML="Username must be 3+ letters";
 return;
 }
 
@@ -364,6 +371,8 @@ function logout(){
 if(confirm("Logout account?")) location.reload();
 }
 
+
+
 function addTask(){
 
 let task=id("taskInput").value;
@@ -372,6 +381,113 @@ if(task!=""){
 id("taskList").innerHTML += "<li>"+task+"</li>";
 id("taskInput").value="";
 }
+
+
+}
+
+function clearTasks(){
+id("taskList").innerHTML="";
+}
+
+function computeAverage(){
+
+let total=0;
+
+for(let i=1;i<=6;i++){
+total += Number(id("g"+i).value);
+}
+
+id("averageResult").innerHTML=(total/6).toFixed(2);
+
+}
+
+
+
+
+
+function id(x){
+return document.getElementById(x);
+}
+
+let attempts = 0;
+let locked = false;
+
+function updateClock(){
+id("clock").innerHTML = new Date().toLocaleString();
+}
+setInterval(updateClock,1000);
+updateClock();
+
+
+function togglePassword(){
+id("pwd").type =
+id("pwd").type=="password" ? "text" : "password";
+}
+
+function clearForm(){
+if(locked) return;
+id("uname").value="";
+id("pwd").value="";
+}
+
+function authenticate(){
+
+
+
+if(locked){
+id("display").innerHTML="Access Denied. Login disabled.";
+return;
+}
+
+let user=id("uname").value.trim();
+let pass=id("pwd").value;
+
+if(!/^[A-Za-z]{3,}$/.test(user) || pass.length<4){
+
+attempts++;
+
+if(attempts>=5){
+locked = true;
+
+id("uname").disabled = true;
+id("pwd").disabled = true;
+
+
+document.querySelectorAll("#loginPage button").forEach(btn=>{
+btn.disabled = true;
+});
+
+id("display").innerHTML="WARNING: Access Denied. Maximum login attempts reached.";
+return;
+}
+
+id("display").innerHTML="Invalid login. Attempts left: " + (5-attempts);
+return;
+}
+
+
+
+id("loginPage").style.display="none";
+id("dashboard").style.display="block";
+id("userDisplay").innerHTML=user;
+id("todayDate").innerHTML=new Date().toDateString();
+
+}
+
+function logout(){
+if(confirm("Logout account?")) location.reload();
+}
+
+function addTask(){
+
+
+let task=id("taskInput").value;
+
+if(task!=""){
+id("taskList").innerHTML += "<li>"+task+"</li>";
+id("taskInput").value="";
+}
+
 
 }
 
